@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     @title="about"
   end
 
- def about
+ def help
     @title="help"
   end
 
