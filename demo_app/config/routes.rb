@@ -1,4 +1,7 @@
 DemoApp::Application.routes.draw do
+  resources :sessions ,:only=>[:new,:create,:destroy]
+  match '/signin',:to=>'sessions#new'
+  match '/signup',:to=>'sessions#destroy'
 
   root :to => 'pages#home'
   match '/contact',:to =>'pages#contact'
