@@ -1,4 +1,20 @@
 class UsersController < ApplicationController
+  before_filter :authenticate, :only=> [:edit,:update,:destroy]
+  private 
+
+  def authenticate
+    if current_user.nil?
+      redirect_to signin_path,:notice => "please sign in"
+    else
+      user=User.find(params[:id])
+      if user != current_user
+        redirect_to root_path,
+          :notice=>"editing other user is not allowed"
+      end
+     end
+  end
+
+public
   # GET /users
   # GET /users.json
   def index
@@ -43,16 +59,18 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
-    respond_to do |format|
+
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+                sign_in @user
+                redirect_to @user
       else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+               @title =  "Sign up"
+               render "new"
+
       end
+       
     end
-  end
+
 
   # PUT /users/1
   # PUT /users/1.json

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
              validates :password, :presence=>true, :confirmation=>true,  
 :length => {:within=> 6..40}
 
-before_save :encrypt_password
+before_save :do_encrypt_password
  def has_password?(submitted_password)
  encrypt_password==encrypt(submitted_password)
  end
@@ -20,12 +20,12 @@ before_save :encrypt_password
 def self.authenticate(email,submitted_password)
     user= find_by_email(email)
     return nil if user.nil?
-    return user if user.haspassword?(submitted_password)
+    return user if user.has_password?(submitted_password)
     return nil
 end
 
  private
- def encrypt_password
+ def do_encrypt_password
      self.encrypt_password = encrypt(password)
  end 
  

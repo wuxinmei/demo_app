@@ -1,5 +1,5 @@
 <h1>Sign In</h1>
-<%=form_for(:session,:url=>sessions) do |f|%>
+<%=form_for(:session, :url=>sessions) do |f|%>
 <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
@@ -12,4 +12,4 @@
     <%= f.submit "Sign In" %>
 </div>
 <% end %>
-<p>New user?<%link_to "Sign up now!",signup_path%></p>
+<p>New user?<%link_to "Sign up now!",signup_path %></p>
